@@ -6,18 +6,16 @@
    structure at some point... */
 typedef struct heapStruct {
     void *heap;
-    int size
+    int heapSize;
+    void **free;
+    int freeSize;
 } heap_t;
 
-/* Meta data for the heap structure
-   Probably declare a global of this,
-   alongside a heap. */
-typedef struct heapMetaStuct {
-    /* Points to all free memory chunks. */
-    void **free;
-    int size;
-} heapMeta_t;
 
-
-void *minit(int size);
+/* Returns
+   0 on success,
+   1 on uninitalised heap error,
+   2 on mmap failure */
+int minit(heap_t *heap, int size);
 void *mulloc(int size);
+int mude(heap_t *heap);

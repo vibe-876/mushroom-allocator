@@ -1,5 +1,5 @@
 /* This is the source file for the _alloc functions. */
-#include <sys/mmap.h>
+#include <sys/mman.h>
 
 
 /* Mushroom heap INITliser.

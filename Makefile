@@ -8,7 +8,7 @@ OBJS=$(SRC)/alloc.o $(SRC)/main.o
 default: $(OBJS)
 	$(CC) $(CFLAGS) -o main $^
 
-$(SRC)/main.o:
+$(SRC)/main.o: $(SRC)/alloc.h
 $(SRC)/alloc.o: $(SRC)/alloc.h
 
 

@@ -1,5 +1,4 @@
 #include "alloc.h"
-/* This is the source file for the _alloc functions. */
 #include <sys/mman.h>
 
 
@@ -15,10 +14,13 @@ int minit(heap_t *heap, int size)
     heap->heap = mmap(0x0, heap->heapSize, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON, -1, 0);
 
     if(heap->heap == MAP_FAILED) return(2);
+
+    /* Initalise all spaces as free */
+    for(int i = 0; i < heap->heapSize; i++) heap->free[i] = heap->heap[i * CHUNKSIZE];
     return(0);
 }
 
-/* MUshroom aLLOCator!
+/* MUshroom aLLOCator.
    I would have named it malloc (Mushroom ALLOCator),
    but gcc kept on throwing warnings when I did that,
    and I couldn't be bothered to turn them off.
@@ -29,11 +31,12 @@ void *mulloc(int size)
 }
 
 /* MUshroom DEallocator
-   Also means tired in German. */
+   Also means tired in German.
+   Maybe the pointers are just tired, and want a rest... */
 int mude(heap_t *heap)
 {
     int returnCode;
     returnCode = munmap(heap->heap, heap->heapSize);
     
-    return(0);
+    return(returnCode);
 }

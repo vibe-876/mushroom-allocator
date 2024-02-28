@@ -1,4 +1,4 @@
-#define CHUNK 16
+#define CHUNKSIZE 16
 
 
 /* The heap itself.

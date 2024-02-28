@@ -6,9 +6,9 @@
    structure at some point... */
 typedef struct heapStruct {
     void *heap;
-    int heapSize;
-    void **free;
-    int freeSize;
+    int size;
+    void **mHeap;
+    int mSize;
 } heap_t;
 
 

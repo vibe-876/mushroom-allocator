@@ -10,13 +10,18 @@ int minit(heap_t *heap, int size)
 {
     if(heap == 0x0) return(1);
 
-    heap->heapSize = size;
-    heap->heap = mmap(0x0, heap->heapSize, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON, -1, 0);
+    /* Allocate memory for the heap. */
+    heap->size = size;
+    heap->heap = mmap(0x0, heap->size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON, -1, 0);
 
     if(heap->heap == MAP_FAILED) return(2);
 
+    /* Allocate memory for the heap's meta data. */
+    heap->mSize = heap->size / CHUNKSIZE;
+    heap->mHeap = mmap(0x0, heap->mSize, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON, -1, 0);
+    
     /* Initalise all spaces as free */
-    for(int i = 0; i < heap->heapSize; i++) heap->free[i] = heap->heap[i * CHUNKSIZE];
+    //    for(int i = 0; i < heap->size; i++) heap->mHeap[i] = heap->(char *)heap[i * CHUNKSIZE];
     return(0);
 }
 
@@ -36,7 +41,7 @@ void *mulloc(int size)
 int mude(heap_t *heap)
 {
     int returnCode;
-    returnCode = munmap(heap->heap, heap->heapSize);
+    returnCode = munmap(heap->heap, heap->size);
     
     return(returnCode);
 }

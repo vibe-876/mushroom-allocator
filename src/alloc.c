@@ -1,4 +1,15 @@
+/* So this works by allocating a segment of memory
+   (known as size), and a selection of blocks (the
+   size of which is set in alloc.h as BLOCKSIZE).
+   A pointer is then set to the start of each of
+   these blocks, which at this point are free.
+   Should some memory need to be allocated, the
+   list of free pointers is searched, and the first
+   linear segment of sufficient size is selected. */
+
 #include "alloc.h"
+
+#include <stdio.h>
 #include <sys/mman.h>
 
 
@@ -20,8 +31,8 @@ int minit(heap_t *heap, int size)
     heap->mSize = heap->size / CHUNKSIZE;
     heap->mHeap = mmap(0x0, heap->mSize, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON, -1, 0);
     
-    /* Initalise all spaces as free */
-    //    for(int i = 0; i < heap->size; i++) heap->mHeap[i] = heap->(char *)heap[i * CHUNKSIZE];
+    /* Initalise all blocks as free */
+    for(int i = 0; i < heap->size; i++) heap->mHeap[i] = heap->*(char *)heap;
     return(0);
 }
 

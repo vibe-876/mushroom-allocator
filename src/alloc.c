@@ -20,6 +20,7 @@
 int minit(heap_t *heap, int size)
 {
     if(heap == 0x0) return(1);
+    if(size % BLOCKSIZE != 0) return(1);
 
     /* Allocate memory for the heap. */
     heap->size = size;
@@ -37,9 +38,6 @@ int minit(heap_t *heap, int size)
 }
 
 /* MUshroom aLLOCator.
-   I would have named it malloc (Mushroom ALLOCator),
-   but gcc kept on throwing warnings when I did that,
-   and I couldn't be bothered to turn them off.
    Returns a pointer to the start of the allocated area. */
 void *mulloc(int size)
 {
@@ -47,8 +45,8 @@ void *mulloc(int size)
 }
 
 /* MUshroom DEallocator
-   Also means tired in German.
-   Maybe the pointers are just tired, and want a rest... */
+   Mude also means tired in German.
+   Maybe the pointers are just tired, and want a rest :( ... */
 int mude(heap_t *heap)
 {
     int returnCode;
